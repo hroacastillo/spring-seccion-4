@@ -18,6 +18,7 @@ public class FormController {
         Usuario usuario = new Usuario();
         usuario.setNombre("Hector");
         usuario.setApellido("Roa");
+        usuario.setIdentificador("123456.789-K");
 
         model.addAttribute("titulo", "Formulario Usuarios");
         model.addAttribute("usuario", usuario);
