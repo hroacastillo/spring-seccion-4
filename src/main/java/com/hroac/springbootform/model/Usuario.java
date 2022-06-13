@@ -1,20 +1,36 @@
 package com.hroac.springbootform.model;
 
-import javax.validation.constraints.NotEmpty;
+import com.hroac.springbootform.validation.IdentificadorRegex;
+import com.hroac.springbootform.validation.Requerido;
+
+import javax.validation.constraints.*;
+import java.util.Date;
 
 public class Usuario {
-
+    //@Pattern(regexp = "[\\d]{2}[.][\\d]{3}[.][\\d]{3}[-][A-Z]{1}")
+    @IdentificadorRegex
     private String identificador;
-    @NotEmpty
+    //@NotEmpty(message = "El nombre de usuario no puede ser vacío")
     private String nombre;
-    @NotEmpty
+    @Requerido
     private String apellido;
-    @NotEmpty
+    @NotBlank
+    @Size(min = 3, max = 8)
     private String username;
     @NotEmpty
     private String password;
     @NotEmpty
+    @Email(message = "El formato de correo es incorrecto")
     private String email;
+    @NotNull
+    @Min(5)
+    @Max(5000)
+    private Integer cuenta;
+
+    @NotNull
+    @FutureOrPresent
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fechaNacimiento;
 
     public Usuario() {
     }
@@ -79,5 +95,21 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Integer cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 }
