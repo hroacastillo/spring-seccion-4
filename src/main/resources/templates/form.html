@@ -7,6 +7,17 @@
 <body>
     <h3 th:text="${titulo}"></h3>
     <form th:action="@{/form}" th:object="${usuario}" method="post">
+
+        <div>
+            <label for="pais">Identificador: </label>
+            <div>
+                <select id="pais" th:field="*{pais}">
+                    <option value="">Seleccionar</option>
+                    <option th:each="pais: ${paisesMap.entrySet()}" th:value="${pais.key}" th:text="${pais.value}"></option>
+                </select>
+            </div>
+            <div th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></div>
+        </div>
         <div>
             <label for="identificador">Identificador: </label>
             <div>
