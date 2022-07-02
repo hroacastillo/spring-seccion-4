@@ -1,7 +1,10 @@
 package com.hroac.springbootform.controller;
 
 import com.hroac.springbootform.editors.NombreMayusculaEditor;
+import com.hroac.springbootform.editors.PaisPropertyEditor;
+import com.hroac.springbootform.model.Pais;
 import com.hroac.springbootform.model.Usuario;
+import com.hroac.springbootform.services.PaisService;
 import com.hroac.springbootform.validation.UsuarioValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -23,6 +26,12 @@ public class FormController {
     @Autowired
     private UsuarioValidation validator;
 
+    @Autowired
+    private PaisService paisService;
+
+    @Autowired
+    private PaisPropertyEditor paisEditor;
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(validator);
@@ -31,11 +40,13 @@ public class FormController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, "fechaNacimiento", new CustomDateEditor(dateFormat, false));
         binder.registerCustomEditor(String.class,"nombre", new NombreMayusculaEditor());
+        binder.registerCustomEditor(Pais.class,"pais", paisEditor);
     }
 
-    @ModelAttribute("paises")
-    public List<String> paises() {
-        return Arrays.asList("España","Mexico","Perú","Colombia","Argentina");
+    @ModelAttribute("listaPaises")
+    public List<Pais> listaPaises() {
+
+        return paisService.list();
     }
 
     @ModelAttribute("paisesMap")
